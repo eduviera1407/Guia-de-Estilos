@@ -25,7 +25,7 @@ const Login = () => {
         } else {
             setAlert({ message: 'Credenciales erróneas.', severity: 'error' });
             setLoggedIn(false);
-            navigate('/Reports'); // Redirige a Home
+           
       
         }
     };
