@@ -3,41 +3,49 @@ import { Container, Typography, Button, Box, Grid, Paper, TextField, Alert } fro
 import LockIcon from '@mui/icons-material/Lock';
 import LoginIcon from '@mui/icons-material/Login';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
-import { useNavigate } from 'react-router-dom'; // Importa useNavigate
-//Importamos el useDispatch del react-redux
+import { useNavigate } from 'react-router-dom'; 
 import { useDispatch} from 'react-redux'
-//Importamos las acciones que están en el fichero authSlice.ts
 import { authActions } from '../store/authSlice';
+import Menu from '../components/Menu'
+
 const Login = () => {
     const dispatch = useDispatch()
-    const navigate = useNavigate(); // Inicializa useNavigate
-    const bduser = 'eduardo';
-    const bdpasswd = '1234';
+    const navigate = useNavigate(); 
     const [data, setData] = useState({
         user: '',
         password: '',
     });
     const [alert, setAlert] = useState({ message: '', severity: '' });
     const [loggedIn, setLoggedIn] = useState(false); 
+   const isVerifiedUser = async () => {
+        try {
+            const response = await fetch(`http://localhost:3030/login?user=${data.user}&password=${data.password}`);
+            const result = await response.json();
+            if (result.data.length !== 0) {
+             
+                setAlert({ message: 'Has iniciado sesión.', severity: 'success' });
+                setLoggedIn(true);
+                dispatch(authActions.login({
+                    name: data.user,
+                    rol: 'administrador', 
+                }));
+                navigate('/home');
+            } else {
+          
+                setAlert({ message: 'Credenciales erróneas.', severity: 'error' });
+                setLoggedIn(false);
+            }
+        } catch (error) {
+            setAlert({ message: 'Hubo un error con la conexión.', severity: 'error' });
+            console.error("Error:", error);
+        }
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (data.user === bduser && data.password === bdpasswd) {
-            setAlert({ message: 'Has iniciado sesión.', severity: 'success' });
-            setLoggedIn(true); 
-            navigate('/home'); // Redirige a Home
-           //aquí pongo el dispatch para cambiar el estado a login en el store del redux
-            dispatch(authActions.login({
-             name: data.user, //data.user es el nombre de usuario que ha ingresado el usuario
-             rol: 'administrador'
-    }))
-        } else {
-            setAlert({ message: 'Credenciales erróneas.', severity: 'error' });
-            setLoggedIn(false);
-          
-      
-        }
+        isVerifiedUser(); 
     };
+    
 
     const handleChangeuser = (e) => {
         setData({
@@ -54,7 +62,8 @@ const Login = () => {
     };
 
     return (
-        <Container maxWidth="sm" sx={{ mt: 4, m: 4 }}>
+        <Container maxWidth="sm" sx={{ mt: 4, m: 4  ,margin:'auto' ,padding:'100px'}}>
+            <Menu/>
             <Paper elevation={3} sx={{ textAlign: 'center', p: 3 }}>
                 <Box display="flex" justifyContent="center" alignItems="center" sx={{ mb: 2 }}>
                     {loggedIn ? <LockOpenIcon /> : <LockIcon />} 
@@ -106,4 +115,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default Login;  

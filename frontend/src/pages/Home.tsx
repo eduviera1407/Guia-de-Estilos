@@ -1,14 +1,11 @@
-import Typography from '@mui/material/Typography'; 
 
-import Button from '@mui/material/Button';
 import { useSelector } from 'react-redux'
-// Importamos lo que necesitamos para el tipo del selector()
 import { RootState} from '../store/index'
-//Importamos las acciones que están en el fichero authSlice.ts
 import { authActions } from '../store/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch} from 'react-redux';
-
+import Menu from '../components/Menu';
+import Dashboard from '../components/Dashboard';
 
     
 const Home = () => {
@@ -21,14 +18,13 @@ const Home = () => {
         navigate('/'); // Redirige a la página de inicio
         console.log(userData)
     };
+    
     return (
         <div>
-            <Typography variant="h6" color='text.primary'>
-                Pagina Home de Eduardo Viera: Soy el Usuario{userData.userName} y con el rol {userData.userRol}
-            </Typography>
-            <Button variant="contained" color="primary" onClick={handleGoHome} sx={{ mt: 3 }}>
-              Salir
-            </Button>
+           
+             <Menu />
+             <Dashboard></Dashboard>
+            
          
         </div>
         
