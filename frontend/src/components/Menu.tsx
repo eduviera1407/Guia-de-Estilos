@@ -77,7 +77,7 @@ const Menu = () => {
                             </ListItemButton>
                         </ListItem>
                     </Link>
-                    <Link to={'/'} style={{ textDecoration: 'none', color: 'black' }}>
+                    <Link to={'/home'} style={{ textDecoration: 'none', color: 'black' }}>
                         <ListItem disablePadding>
                             <ListItemButton>
                                 <ListItemIcon>
