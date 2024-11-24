@@ -4,9 +4,9 @@ import LockIcon from '@mui/icons-material/Lock';
 import LoginIcon from '@mui/icons-material/Login';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import { useNavigate } from 'react-router-dom'; 
-import { useDispatch} from 'react-redux'
+import { useDispatch,} from 'react-redux'
 import { authActions } from '../store/authSlice';
-import Menu from '../components/Menu'
+
 
 const Login = () => {
     const dispatch = useDispatch()
@@ -14,25 +14,30 @@ const Login = () => {
     const [data, setData] = useState({
         user: '',
         password: '',
+        rol:'',
     });
     const [alert, setAlert] = useState({ message: '', severity: '' });
     const [loggedIn, setLoggedIn] = useState(false); 
-   const isVerifiedUser = async () => {
+    const isVerifiedUser = async () => {
         try {
             const response = await fetch(`http://localhost:3030/login?user=${data.user}&password=${data.password}`);
             const result = await response.json();
-            if (result.data.length !== 0) {
-             
+    
+            if (result.data && result.data.nombre && result.data.rol) {
+                const userData = result.data;
+    
+                console.log('userData:', userData); 
+    
+                dispatch(authActions.login({
+                    name: userData.nombre,
+                    rol: userData.rol
+                }));
+    
                 setAlert({ message: 'Has iniciado sesión.', severity: 'success' });
                 setLoggedIn(true);
-                dispatch(authActions.login({
-                    name: data.user,
-                    rol: 'administrador', 
-                }));
                 navigate('/home');
             } else {
-          
-                setAlert({ message: 'Credenciales erróneas.', severity: 'error' });
+                setAlert({ message: 'Credenciales erróneas o rol no encontrado.', severity: 'error' });
                 setLoggedIn(false);
             }
         } catch (error) {
@@ -40,7 +45,9 @@ const Login = () => {
             console.error("Error:", error);
         }
     };
-
+    
+    
+    
     const handleSubmit = (e) => {
         e.preventDefault();
         isVerifiedUser(); 
@@ -63,7 +70,7 @@ const Login = () => {
 
     return (
         <Container maxWidth="sm" sx={{ mt: 4, m: 4  ,margin:'auto' ,padding:'100px'}}>
-            <Menu/>
+    
             <Paper elevation={3} sx={{ textAlign: 'center', p: 3 }}>
                 <Box display="flex" justifyContent="center" alignItems="center" sx={{ mb: 2 }}>
                     {loggedIn ? <LockOpenIcon /> : <LockIcon />} 

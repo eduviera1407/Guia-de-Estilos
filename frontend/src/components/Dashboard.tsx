@@ -29,7 +29,7 @@ function Dashboard() {
             [name]: type === 'number' ? parseFloat(value) || 0 : value
         }));
     };
-    // Función para hacer el fetch y agregar el nuevo producto
+   
   
     async function isItemAdded() {
         fetch(`http://localhost:3030/addItem?nombre=${item.nombre}&marca=${item.marca}&tipo=${item.tipo}&precio=${item.precio}`)
