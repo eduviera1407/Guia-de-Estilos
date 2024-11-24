@@ -37,10 +37,8 @@ function InformeColeccion() {
     fetchData();
   }, []);
 
-  // Cálculo del total
   const totalPrecio = data.reduce((sum, row) => sum + row.precio, 0);
 
-  // Agregar una fila al final para mostrar el total
   const dataConTotal = [
     ...data,
     {
@@ -74,7 +72,7 @@ function InformeColeccion() {
         columnsButton: true,
         draggable: true,
         headerStyle: {
-          backgroundColor: "#3f51b5",
+          backgroundColor: " #ff0000 ",
           color: "white",
         },
         rowStyle: (rowData) =>
