@@ -3,6 +3,7 @@ import Menu from '../components/Menu';
 import Grid from '@mui/material/Grid';
 import { useState } from 'react';
 import InformeColeccion from '../components/InformeColeccion';
+import Tooltip from '@mui/material/Tooltip';
 
 
 const ReportsEVS = () => {
@@ -22,9 +23,11 @@ const ReportsEVS = () => {
                 <Menu />
             </Grid>
             <Grid item xs={12}>
+    <Tooltip title="Generar Informe" disableInteractive>
     <Button variant="contained" onClick={handleButtonClick}>
         Informes
     </Button>
+    </Tooltip>
 </Grid>
 {mostrarInforme && <InformeColeccion data={dataColeccion} />}
 

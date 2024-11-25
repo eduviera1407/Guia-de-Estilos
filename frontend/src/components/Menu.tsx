@@ -23,10 +23,11 @@ import PersonIcon from '@mui/icons-material/Person';  // Icono para el usuario n
 import { useDispatch, useSelector } from 'react-redux';
 import { authActions } from '../store/authSlice';
 import { RootState } from '../store';
+import Tooltip from '@mui/material/Tooltip';
 
 const Menu = () => {
   const userData = useSelector((state: RootState) => state.authenticator);
-  
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -39,7 +40,7 @@ const Menu = () => {
 
   useEffect(() => {
     if (!isLoggedin) {
-      
+
       navigate('/');
     }
   }, [isLoggedin, navigate]);
@@ -72,12 +73,16 @@ const Menu = () => {
         <List>
           <Link to={'/home'} style={{ textDecoration: 'none', color: 'black' }}>
             <ListItem disablePadding>
+            <Tooltip title="Volver a la pagina principal" disableInteractive>
               <ListItemButton>
                 <ListItemIcon>
                   <HomeIcon />
                 </ListItemIcon>
                 <ListItemText primary="Inicio" />
+                
               </ListItemButton>
+              </Tooltip>
+
             </ListItem>
           </Link>
 
@@ -85,35 +90,47 @@ const Menu = () => {
           {userData.userRol === 'admin' && (
             <Link to={'/Reports'} style={{ textDecoration: 'none', color: 'black' }}>
               <ListItem disablePadding>
+              <Tooltip title="Ir a la pagina de Informes" disableInteractive>
                 <ListItemButton>
                   <ListItemIcon>
                     <SummarizeIcon />
                   </ListItemIcon>
                   <ListItemText primary="Informes" />
                 </ListItemButton>
+                </Tooltip>
               </ListItem>
             </Link>
           )}
 
-          <Link to={'/home'} style={{ textDecoration: 'none', color: 'black' }}>
+          <Link to={'/Viera_Santana_Eduardo_UT3A1.pdf'} target='_blank' style={{ textDecoration: 'none', color: 'black' }}>
             <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  <HelpIcon />
-                </ListItemIcon>
-                <ListItemText primary="Ayuda" />
-              </ListItemButton>
+
+              <Tooltip title="Manual de Ayuda" disableInteractive>
+                <ListItemButton>
+
+                  <ListItemIcon>
+                    <HelpIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Ayuda" />
+                </ListItemButton>
+              </Tooltip>
+
+
             </ListItem>
           </Link>
 
           <Link to={'/'} style={{ textDecoration: 'none', color: 'black' }}>
             <ListItem disablePadding>
+            <Tooltip title="Cerrar Sesión" disableInteractive>
               <ListItemButton>
                 <ListItemIcon>
                   <LogoutIcon />
                 </ListItemIcon>
                 <ListItemText primary="Salir" />
+                
               </ListItemButton>
+              </Tooltip>
+
             </ListItem>
           </Link>
         </List>

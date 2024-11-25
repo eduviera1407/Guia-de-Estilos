@@ -3,20 +3,21 @@ import React, { useState, useEffect } from 'react';
 import { Box, Button, Grid, TextField, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useDispatch, useSelector } from 'react-redux';
+import Tooltip from '@mui/material/Tooltip';
 
 interface ItemType {
-    id?: number;
-    nombre: string;
-    marca: string;
-    tipo: string;
-    precio: number;
+  id?: number;
+  nombre: string;
+  marca: string;
+  tipo: string;
+  precio: number;
 }
 
 const itemInitialState: ItemType = {
-    nombre: '',
-    marca: '',
-    tipo: '',
-    precio: 0,
+  nombre: '',
+  marca: '',
+  tipo: '',
+  precio: 0,
 };
 
 function Dashboard() {
@@ -39,10 +40,10 @@ function Dashboard() {
       .then(response => {
         console.log('Lo que nos llega de la base de datos: ')
         console.log(response)
-                
+
         if (response > 0) {
           alert('Datos guardados con éxito');
-          setItem(itemInitialState); // Resetear el formulario después de la inserción
+          setItem(itemInitialState);
           fetchData();
         }
       })
@@ -88,7 +89,6 @@ function Dashboard() {
     isItemAdded();
   };
 
-  // Llamar a fetchData cuando el componente se monte
   useEffect(() => {
     fetchData();
   }, []);
@@ -150,9 +150,11 @@ function Dashboard() {
             />
           </Grid>
           <Grid item xs={12}>
-            <Button type="submit" variant="contained" color="primary" fullWidth sx={{ padding: '10px', fontSize: '16px' }}>
-              Insertar Producto
-            </Button>
+            <Tooltip title="Insertar">
+              <Button type="submit" variant="contained" color="primary" fullWidth sx={{ padding: '10px', fontSize: '16px' }}>
+                Insertar Producto
+              </Button>
+            </Tooltip>
           </Grid>
         </Grid>
       </Box>
@@ -177,13 +179,16 @@ function Dashboard() {
           <TableBody>
             {tableData.map((row: ItemType) => (
               <TableRow key={row.id} sx={{ '&:nth-of-type(even)': { backgroundColor: '#f7f7f7' } }}>
-              <TableCell>
-  {userData.userRol === 'admin' && (
-    <Button color='secondary' onClick={() => handleDeleteItem(row)}>
-      <DeleteForeverIcon />
-    </Button>
-  )}
-</TableCell>
+                <TableCell>
+                  {userData.userRol === 'admin' && (
+                    
+                    <Button color='secondary' onClick={() => handleDeleteItem(row)}>
+                     <Tooltip title="Eliminar Registro" disableInteractive>
+                      <DeleteForeverIcon />
+                      </Tooltip>
+                    </Button>
+                  )}
+                </TableCell>
 
                 <TableCell>{row.nombre}</TableCell>
                 <TableCell>{row.marca}</TableCell>
