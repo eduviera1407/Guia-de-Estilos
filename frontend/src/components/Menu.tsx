@@ -102,7 +102,7 @@ const Menu = () => {
             </Link>
           )}
 
-          <Link to={'/Viera_Santana_Eduardo_UT3A1.pdf'} target='_blank' style={{ textDecoration: 'none', color: 'black' }}>
+          <Link to={'/Manual de Usuario.pdf'} target='_blank' style={{ textDecoration: 'none', color: 'black' }}>
             <ListItem disablePadding>
 
               <Tooltip title="Manual de Ayuda" disableInteractive>
