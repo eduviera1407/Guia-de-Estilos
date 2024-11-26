@@ -64,7 +64,7 @@ app.get('/addItem', async function(req, res, next) {
         next(err);
         }
         });
-        app.get('/coleccion', async (req, res) => {
+    app.get('/coleccion', async (req, res) => {
            try {
             res.json(await items.getData(req,res))
             items.getData()

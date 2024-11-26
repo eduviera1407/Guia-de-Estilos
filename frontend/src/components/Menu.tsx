@@ -64,9 +64,14 @@ const Menu = () => {
         </div>
         <IconButton edge="end">
           {userData.userRol === 'admin' ? (
-            <AdminPanelSettingsIcon /> // Icono para admin
+            <Tooltip title="Administrador" arrow>
+              
+            <AdminPanelSettingsIcon /> 
+            </Tooltip>
           ) : (
-            <PersonIcon /> // Icono para usuario normal
+            <Tooltip title="Usuario" arrow>
+            <PersonIcon />
+            </Tooltip>
           )}
         </IconButton>
       </Toolbar>
