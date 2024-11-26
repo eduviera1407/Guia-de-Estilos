@@ -24,6 +24,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { authActions } from '../store/authSlice';
 import { RootState } from '../store';
 import Tooltip from '@mui/material/Tooltip';
+import AdbIcon from '@mui/icons-material/Adb';
+import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 
 const Menu = () => {
   const userData = useSelector((state: RootState) => state.authenticator);
@@ -63,16 +65,19 @@ const Menu = () => {
           <Typography color="white">{userData.userName}</Typography>
         </div>
         <IconButton edge="end">
-          {userData.userRol === 'admin' ? (
-            <Tooltip title="Administrador" arrow>
-              
-            <AdminPanelSettingsIcon /> 
-            </Tooltip>
-          ) : (
-            <Tooltip title="Usuario" arrow>
-            <PersonIcon />
-            </Tooltip>
-          )}
+        {userData.userRol === 'admin' ? (
+      <Tooltip title="Administrador" arrow>
+        <AdminPanelSettingsIcon />
+      </Tooltip>
+    ) : userData.userRol === 'usuario' ? (
+      <Tooltip title="Usuario" arrow>
+        <AdbIcon />
+      </Tooltip>
+    ) : userData.userRol === 'invitado' ? (
+      <Tooltip title="Invitado" arrow>
+        <InsertEmoticonIcon />
+      </Tooltip>
+    ) : null}
         </IconButton>
       </Toolbar>
 
@@ -140,6 +145,23 @@ const Menu = () => {
 
             </ListItem>
           </Link>
+
+           {userData.userRol === 'admin' && (
+          <Link to={'/gestionusuarios'} style={{ textDecoration: 'none', color: 'black' }}>
+            <ListItem disablePadding>
+            <Tooltip title="Gestion de usuarios" arrow>
+              <ListItemButton>
+                <ListItemIcon>
+                <PersonIcon />
+                </ListItemIcon>
+                <ListItemText primary="Gestion de usuarios" />
+                
+              </ListItemButton>
+              </Tooltip>
+
+            </ListItem>
+          </Link>
+           )}
         </List>
       </Drawer>
     </AppBar>

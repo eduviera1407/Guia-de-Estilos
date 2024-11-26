@@ -1,8 +1,20 @@
 import '../App.css';
 import React, { useState, useEffect } from 'react';
-import { Box, Button, Grid, TextField, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import {
+  Box,
+  Button,
+  Grid,
+  TextField,
+  Typography,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Tooltip from '@mui/material/Tooltip';
 
 interface ItemType {
@@ -26,28 +38,29 @@ function Dashboard() {
   const [item, setItem] = useState(itemInitialState);
   const [tableData, setTableData] = useState<ItemType[]>([]);
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type } = e.target;
     setItem((prevItem) => ({
       ...prevItem,
-      [name]: type === 'number' ? parseFloat(value) || 0 : value
+      [name]: type === 'number' ? parseFloat(value) || 0 : value,
     }));
   };
 
-  async function isItemAdded() {
-    fetch(`http://localhost:3030/addItem?nombre=${item.nombre}&marca=${item.marca}&tipo=${item.tipo}&precio=${item.precio}`)
-      .then(response => response.json())
-      .then(response => {
-        console.log('Lo que nos llega de la base de datos: ')
-        console.log(response)
-
-        if (response > 0) {
-          alert('Datos guardados con éxito');
-          setItem(itemInitialState);
-          fetchData();
-        }
-      })
-  }
+  const isItemAdded = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3030/addItem?nombre=${item.nombre}&marca=${item.marca}&tipo=${item.tipo}&precio=${item.precio}`
+      );
+      const result = await response.json();
+      if (result > 0) {
+        alert('Datos guardados con éxito');
+        setItem(itemInitialState);
+        fetchData();
+      }
+    } catch (error) {
+      console.error('Error al agregar los datos:', error);
+    }
+  };
 
   const fetchData = async () => {
     try {
@@ -59,30 +72,26 @@ function Dashboard() {
     }
   };
 
-  // Función para eliminar un producto de la base de datos
-  async function handleDeleteItem(row: ItemType) {
+  const handleDeleteItem = async (row: ItemType) => {
     if (userData.userRol !== 'admin') {
       alert('No tienes permisos para eliminar datos.');
       return;
     }
 
-    fetch(`http://localhost:3030/deleteItem?id=${row.id}`)
-      .then(response => response.json())
-      .then(response => {
-        console.log('Lo que nos llega de la base de datos: ');
-        console.log(response);
-        if (response > 0) {
-          alert('Datos eliminados con éxito');
-          fetchData(); // Refresca los datos después de la eliminación
-        } else {
-          alert('Hubo un error al intentar eliminar los datos');
-        }
-      })
-      .catch(error => {
-        console.error('Error al eliminar el dato:', error);
-        alert('Hubo un problema con la solicitud de eliminación.');
-      });
-  }
+    try {
+      const response = await fetch(`http://localhost:3030/deleteItem?id=${row.id}`);
+      const result = await response.json();
+      if (result > 0) {
+        alert('Datos eliminados con éxito');
+        fetchData();
+      } else {
+        alert('Hubo un error al intentar eliminar los datos');
+      }
+    } catch (error) {
+      console.error('Error al eliminar el dato:', error);
+      alert('Hubo un problema con la solicitud de eliminación.');
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -95,8 +104,22 @@ function Dashboard() {
 
   return (
     <>
-      <Box component="form" sx={{ padding: "50px", margin: "auto", maxWidth: 800, borderRadius: 2, boxShadow: 3, backgroundColor: "#f9f9f9" }} onSubmit={handleSubmit}>
-        <Typography variant="h5" sx={{ textAlign: 'center', mb: 3, fontWeight: 'bold' }}>
+      <Box
+        component="form"
+        sx={{
+          padding: '50px',
+          margin: 'auto',
+          maxWidth: 800,
+          borderRadius: 2,
+          boxShadow: 3,
+          backgroundColor: '#f9f9f9',
+        }}
+        onSubmit={handleSubmit}
+      >
+        <Typography
+          variant="h5"
+          sx={{ textAlign: 'center', mb: 3, fontWeight: 'bold' }}
+        >
           Ingresar Producto
         </Typography>
         <Grid container spacing={2}>
@@ -109,7 +132,8 @@ function Dashboard() {
               required
               fullWidth
               variant="outlined"
-              sx={{ backgroundColor: "#fff" }}
+              sx={{ backgroundColor: '#fff' }}
+              disabled={userData.userRol === 'invitado'}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -121,7 +145,8 @@ function Dashboard() {
               required
               fullWidth
               variant="outlined"
-              sx={{ backgroundColor: "#fff" }}
+              sx={{ backgroundColor: '#fff' }}
+              disabled={userData.userRol === 'invitado'}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -133,7 +158,8 @@ function Dashboard() {
               required
               fullWidth
               variant="outlined"
-              sx={{ backgroundColor: "#fff" }}
+              sx={{ backgroundColor: '#fff' }}
+              disabled={userData.userRol === 'invitado'}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -146,16 +172,26 @@ function Dashboard() {
               required
               fullWidth
               variant="outlined"
-              sx={{ backgroundColor: "#fff" }}
+              sx={{ backgroundColor: '#fff' }}
+              disabled={userData.userRol === 'invitado'}
             />
           </Grid>
-          <Grid item xs={12}>
-            <Tooltip title="Insertar los productos" arrow>
-              <Button type="submit" variant="contained" color="primary" fullWidth sx={{ padding: '10px', fontSize: '16px' }}>
-                Insertar Producto
-              </Button>
-            </Tooltip>
-          </Grid>
+        
+            <Grid item xs={12}>
+              <Tooltip title="Insertar los productos" arrow>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  fullWidth
+                  sx={{ padding: '10px', fontSize: '16px' }}
+                  disabled={userData.userRol === 'invitado'}
+                >
+                  Insertar Producto
+                </Button>
+              </Tooltip>
+            </Grid>
+          
         </Grid>
       </Box>
 
@@ -178,18 +214,19 @@ function Dashboard() {
           </TableHead>
           <TableBody>
             {tableData.map((row: ItemType) => (
-              <TableRow key={row.id} sx={{ '&:nth-of-type(even)': { backgroundColor: '#f7f7f7' } }}>
+              <TableRow
+                key={row.id}
+                sx={{ '&:nth-of-type(even)': { backgroundColor: '#f7f7f7' } }}
+              >
                 <TableCell>
                   {userData.userRol === 'admin' && (
-                    
-                    <Button color='secondary' onClick={() => handleDeleteItem(row)}>
-                     <Tooltip title="Eliminar Registro" disableInteractive arrow>
-                      <DeleteForeverIcon />
+                    <Button color="secondary" onClick={() => handleDeleteItem(row)}>
+                      <Tooltip title="Eliminar Registro" disableInteractive arrow>
+                        <DeleteForeverIcon />
                       </Tooltip>
                     </Button>
                   )}
                 </TableCell>
-
                 <TableCell>{row.nombre}</TableCell>
                 <TableCell>{row.marca}</TableCell>
                 <TableCell>{row.tipo}</TableCell>

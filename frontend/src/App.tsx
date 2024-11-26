@@ -4,6 +4,7 @@ import Login from './pages/Login';
 import Home from './pages/Home';
 import Reports from './pages/Reports';
 import ErrorPage from './pages/ErrorPage'
+import GestionUsuarios from './pages/GestionUsuarios'
 // Crear el router
 const router = createBrowserRouter([
   {
@@ -19,6 +20,11 @@ const router = createBrowserRouter([
   {
     path: '/reports',
     element: <Reports />,
+    errorElement: <ErrorPage />, 
+  },
+  {
+    path: '/gestionusuarios',
+    element: <GestionUsuarios />,
     errorElement: <ErrorPage />, 
   },
   {

@@ -75,7 +75,32 @@ app.get('/addItem', async function(req, res, next) {
 
         });
         
-        
+app.get('/addItemUser', async function(req, res, next) {
+    try {
+    res.json(await items.insertDataUser(req,res))
+    } catch (err) {
+    console.error(`Error while inserting items `, err.message);
+    next(err);
+    }
+    });
+
+    app.get('/getItemsUser', async function(req, res, next) {
+        try {
+        res.json(await items.getDataUsuarios(req,res))
+        items.getData()
+        } catch (err) {
+        console.error(`Error while getting items `, err.message);
+        next(err);
+        }
+    });
+    app.get('/deleteItemUser', async function(req, res, next) {
+        try {
+        res.json(await items.deleteDataUser(req,res))
+        } catch (err) {
+        console.error(`Error while deleting items `, err.message);
+        next(err);
+        }
+        });
 //Iniciamos la API
 app.listen(port)
 console.log('API escuchando en el puerto ' + port)

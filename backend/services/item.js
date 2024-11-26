@@ -40,9 +40,43 @@ const result = await db.query(
 datos que ha sido borrado. Si ese número es mayor que cero es que ha habido borrado en la base de datos.*/
 return result.affectedRows
 }
+
+async function insertDataUser (req, res) {
+    
+    const data = req.query
+    const result = await db.query(
+        `INSERT INTO usuarios (nombre,login,password,rol) VALUES ('${data.nombre}','${data.login}','${data.password}','${data.rol}')`)
+
+    return result.affectedRows
+    }
+
+    async function getDataUsuarios (req, res) {
+        //La variable rows almacena los datos obtenidos de la consulta select.
+        const rows = await db.query(
+            `select * from usuarios`
+        )
+        const data = helper.emptyOrRows(rows)
+        return {
+        data
+        }
+        }
+
+     async function deleteDataUser (req, res) {
+            const data = req.query
+            const result = await db.query(
+            
+            `DELETE FROM user WHERE id = '${data.id}'`
+            )
+            
+            return result.affectedRows
+            }
+
 //Al final del fichero exporto las funciones getData, insertData y deleteData
 module.exports = {
 getData,
 insertData,
-deleteData
+deleteData,
+insertDataUser,
+getDataUsuarios,
+deleteDataUser
 }
