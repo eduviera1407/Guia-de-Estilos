@@ -23,7 +23,7 @@ const ReportsEVS = () => {
                 <Menu />
             </Grid>
             <Grid item xs={12}>
-    <Tooltip title="Generar Informe" disableInteractive>
+    <Tooltip title="Generar Informe" arrow>
     <Button variant="contained" onClick={handleButtonClick}>
         Informes
     </Button>

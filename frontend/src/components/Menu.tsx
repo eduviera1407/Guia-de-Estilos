@@ -55,7 +55,9 @@ const Menu = () => {
     <AppBar position="fixed">
       <Toolbar>
         <IconButton edge="start" onClick={toggleDrawer(true)}>
+        <Tooltip title="Abrir menu" disableInteractive arrow>
           <MenuIcon />
+          </Tooltip>
         </IconButton>
         <div style={{ flexGrow: 1, textAlign: 'center' }}>
           <Typography color="white">{userData.userName}</Typography>
@@ -73,7 +75,7 @@ const Menu = () => {
         <List>
           <Link to={'/home'} style={{ textDecoration: 'none', color: 'black' }}>
             <ListItem disablePadding>
-            <Tooltip title="Volver a la pagina principal" disableInteractive>
+            <Tooltip title="Volver a la pagina principal"  arrow>
               <ListItemButton>
                 <ListItemIcon>
                   <HomeIcon />
@@ -90,7 +92,7 @@ const Menu = () => {
           {userData.userRol === 'admin' && (
             <Link to={'/Reports'} style={{ textDecoration: 'none', color: 'black' }}>
               <ListItem disablePadding>
-              <Tooltip title="Ir a la pagina de Informes" disableInteractive>
+              <Tooltip title="Ir a la pagina de Informes" arrow>
                 <ListItemButton>
                   <ListItemIcon>
                     <SummarizeIcon />
@@ -105,7 +107,7 @@ const Menu = () => {
           <Link to={'/Manual de Usuario.pdf'} target='_blank' style={{ textDecoration: 'none', color: 'black' }}>
             <ListItem disablePadding>
 
-              <Tooltip title="Manual de Ayuda" disableInteractive>
+              <Tooltip title="Manual de Ayuda" arrow>
                 <ListItemButton>
 
                   <ListItemIcon>
@@ -121,7 +123,7 @@ const Menu = () => {
 
           <Link to={'/'} style={{ textDecoration: 'none', color: 'black' }}>
             <ListItem disablePadding>
-            <Tooltip title="Cerrar Sesión" disableInteractive>
+            <Tooltip title="Cerrar Sesión" arrow>
               <ListItemButton>
                 <ListItemIcon>
                   <LogoutIcon />

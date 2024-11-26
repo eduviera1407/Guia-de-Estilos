@@ -150,7 +150,7 @@ function Dashboard() {
             />
           </Grid>
           <Grid item xs={12}>
-            <Tooltip title="Insertar">
+            <Tooltip title="Insertar los productos" arrow>
               <Button type="submit" variant="contained" color="primary" fullWidth sx={{ padding: '10px', fontSize: '16px' }}>
                 Insertar Producto
               </Button>
@@ -183,7 +183,7 @@ function Dashboard() {
                   {userData.userRol === 'admin' && (
                     
                     <Button color='secondary' onClick={() => handleDeleteItem(row)}>
-                     <Tooltip title="Eliminar Registro" disableInteractive>
+                     <Tooltip title="Eliminar Registro" disableInteractive arrow>
                       <DeleteForeverIcon />
                       </Tooltip>
                     </Button>

@@ -6,6 +6,7 @@ import LockOpenIcon from '@mui/icons-material/LockOpen';
 import { useNavigate } from 'react-router-dom'; 
 import { useDispatch,} from 'react-redux'
 import { authActions } from '../store/authSlice';
+import Tooltip from '@mui/material/Tooltip';
 
 
 const Login = () => {
@@ -103,10 +104,12 @@ const Login = () => {
                             />
                         </Grid>
                         <Grid item xs={12}>
+                        <Tooltip title="Acceder a la aplicación" arrow>
                             <Button type="submit" variant="contained" color="primary" fullWidth>
                                 Acceder
                                 <LoginIcon sx={{ ml: 1 }} />  
                             </Button>
+                            </Tooltip>
                         </Grid>
                         <Grid item xs={12}>
                             {alert.message && (
