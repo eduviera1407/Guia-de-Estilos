@@ -26,6 +26,7 @@ import { RootState } from '../store';
 import Tooltip from '@mui/material/Tooltip';
 import AdbIcon from '@mui/icons-material/Adb';
 import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
+import { positions } from '@mui/system';
 
 const Menu = () => {
   const userData = useSelector((state: RootState) => state.authenticator);
@@ -57,7 +58,7 @@ const Menu = () => {
     <AppBar position="fixed">
       <Toolbar>
         <IconButton edge="start" onClick={toggleDrawer(true)}>
-        <Tooltip title="Abrir menu" disableInteractive arrow>
+        <Tooltip title="Abrir menu" disableInteractive arrow placement="right" >
           <MenuIcon />
           </Tooltip>
         </IconButton>
@@ -66,7 +67,7 @@ const Menu = () => {
         </div>
         <IconButton edge="end">
         {userData.userRol === 'admin' ? (
-      <Tooltip title="Administrador" arrow>
+      <Tooltip title="Administrador" arrow placement="right">
         <AdminPanelSettingsIcon />
       </Tooltip>
     ) : userData.userRol === 'usuario' ? (
@@ -85,7 +86,7 @@ const Menu = () => {
         <List>
           <Link to={'/home'} style={{ textDecoration: 'none', color: 'black' }}>
             <ListItem disablePadding>
-            <Tooltip title="Volver a la pagina principal"  arrow>
+            <Tooltip title="Volver a la pagina principal"  arrow  placement="right"> 
               <ListItemButton>
                 <ListItemIcon>
                   <HomeIcon />
@@ -102,7 +103,7 @@ const Menu = () => {
           {userData.userRol === 'admin' && (
             <Link to={'/Reports'} style={{ textDecoration: 'none', color: 'black' }}>
               <ListItem disablePadding>
-              <Tooltip title="Ir a la pagina de Informes" arrow>
+              <Tooltip title="Ir a la pagina de Informes" arrow placement="right">
                 <ListItemButton>
                   <ListItemIcon>
                     <SummarizeIcon />
@@ -117,7 +118,7 @@ const Menu = () => {
           <Link to={'/Manual de Usuario.pdf'} target='_blank' style={{ textDecoration: 'none', color: 'black' }}>
             <ListItem disablePadding>
 
-              <Tooltip title="Manual de Ayuda" arrow>
+              <Tooltip title="Manual de Ayuda" arrow placement="right"> 
                 <ListItemButton>
 
                   <ListItemIcon>
@@ -133,7 +134,7 @@ const Menu = () => {
 
           <Link to={'/'} style={{ textDecoration: 'none', color: 'black' }}>
             <ListItem disablePadding>
-            <Tooltip title="Cerrar Sesión" arrow>
+            <Tooltip title="Cerrar Sesión" arrow placement="right">
               <ListItemButton>
                 <ListItemIcon>
                   <LogoutIcon />
@@ -149,7 +150,7 @@ const Menu = () => {
            {userData.userRol === 'admin' && (
           <Link to={'/gestionusuarios'} style={{ textDecoration: 'none', color: 'black' }}>
             <ListItem disablePadding>
-            <Tooltip title="Gestion de usuarios" arrow>
+            <Tooltip title="Gestion de usuarios" arrow placement="right">
               <ListItemButton>
                 <ListItemIcon>
                 <PersonIcon />

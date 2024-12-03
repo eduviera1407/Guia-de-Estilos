@@ -178,7 +178,7 @@ function Dashboard() {
           </Grid>
         
             <Grid item xs={12}>
-              <Tooltip title="Insertar los productos" arrow>
+              <Tooltip title="Insertar los productos" arrow placement="right">
                 <Button
                   type="submit"
                   variant="contained"

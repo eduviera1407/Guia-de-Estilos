@@ -1,7 +1,6 @@
 import '../App.css';
 import React, { useState, useEffect } from 'react';
 import { Box, Button, Grid, TextField, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useDispatch, useSelector } from 'react-redux';
 import Tooltip from '@mui/material/Tooltip';
 import Menu from '../components/Menu';
@@ -127,7 +126,7 @@ const GestionUsuarios = () => {
             />
           </Grid>
           <Grid item xs={12}>
-            <Tooltip title="Insertar el usuario" arrow>
+            <Tooltip title="Insertar el usuario" arrow placement="right">
               <Button type="submit" variant="contained" color="primary" fullWidth sx={{ padding: '10px', fontSize: '16px' }}>
                 Insertar Usuario
               </Button>

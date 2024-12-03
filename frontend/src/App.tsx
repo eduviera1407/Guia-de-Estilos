@@ -5,7 +5,6 @@ import Home from './pages/Home';
 import Reports from './pages/Reports';
 import ErrorPage from './pages/ErrorPage'
 import GestionUsuarios from './pages/GestionUsuarios'
-// Crear el router
 const router = createBrowserRouter([
   {
     path: '/',
